@@ -8,4 +8,4 @@
 # Max memory usage per MPI process:
 #SBATCH --mem-per-cpu=100m
 
-mpirun -np ./parallel_main 512 a.out 10000 0.1 mona_lisa_noisy.jpg out.jpg
+mpirun -np 512 ./parallel_main 10000 0.1 mona_lisa_noisy.jpg out.jpg
