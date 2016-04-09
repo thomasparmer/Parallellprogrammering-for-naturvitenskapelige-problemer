@@ -13,9 +13,9 @@ compile the programs by typing "make" in the terminal.
 The two programs accept the following parameters (in order)
 
 - Serial
-$ ./program number_of_iterations kappa_value infile outfile
+$ ./serial_main number_of_iterations kappa_value infile outfile
 - Parallel
-$ mpirun -np [cores] ./program number_of_iterations kappa_value infile outfile
+$ mpirun -np [cores] ./parallel_main number_of_iterations kappa_value infile outfile
 
 
 if you want to create a compressed file containing all the files type 
