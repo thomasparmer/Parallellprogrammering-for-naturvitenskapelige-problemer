@@ -1,0 +1,3 @@
+Compile with: 
+make
+mpirun -np [cores] ./parallel_smart_memory [infile a][infile b][outfile]
