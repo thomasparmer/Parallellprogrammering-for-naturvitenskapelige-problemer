@@ -7,6 +7,7 @@
 
 #define MASTER 0
 
+
 /* allocating contagious 2d array */
 double** allocate_matrix(int rows, int cols)
 {
@@ -14,7 +15,7 @@ double** allocate_matrix(int rows, int cols)
     double **array= (double **)malloc(rows*sizeof(double*));
     int i;
 
-#pragma omp parallel for
+    #pragma omp parallel for
     for (i=0; i<rows; i++)
 	array[i] = &(data[cols*i]);
 
@@ -52,6 +53,7 @@ void write_matrix_binaryformat(char* filename, double** matrix, int num_rows, in
     fclose (fp);
 }
 
+
 /* Transposes matrix for good cache lineup */
 void transpose_matrix(double ***matrix, int *num_rows, int *num_cols) 
 {
@@ -59,12 +61,13 @@ void transpose_matrix(double ***matrix, int *num_rows, int *num_cols)
     int tmp = *num_rows;
     int i, j;
 
-#pragma omp parallel for private(j)
+    #pragma omp parallel for private(j)
     for (i = 0; i < *num_rows; ++i) {
 	for (j = 0; j < *num_cols; ++j) {
 	    tmp_matrix[j][i] = (*matrix)[i][j];
 	}
     }
+
     *num_rows = *num_cols;
     *num_cols = tmp;
     deallocate_matrix(&(*matrix));
@@ -176,7 +179,7 @@ void matrix_multiplication(int count, double **matrix_a, double **matrix_b, doub
 	tmp = bsize + offset;
     }
 
-#pragma omp parallel for private(j, k)
+    #pragma omp parallel for private(j, k)
     for (i = 0; i < size; ++i) {
         for (j = 0; j < tmp; ++j) {
             for (k = 0; k < l; ++k) { 
@@ -267,7 +270,6 @@ int main(int argc, char *argv[])
 	write_matrix_binaryformat(argv[3], matrix_c, num_rows_a, num_rows_b);
 	t2 = MPI_Wtime(); 
 	printf( "Elapsed time is %f\n", t2 - t1 ); 
-
     }
 
     deallocate_matrix(&matrix_b);
